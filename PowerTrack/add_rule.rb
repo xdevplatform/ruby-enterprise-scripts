@@ -11,15 +11,15 @@ account_name = ENV['ACCOUNT']
 # password = 'INSERT-PASSWORD'
 # account_name = 'INSERT-ACCOUNT-NAME'
 
-stream_label = 'prod' # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
+stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
 # Your stream URL will be constructed based on the variables entered above 
 rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
 
 rule_value = "(\\\"steve brule\\\")"
 rule_tag = "brule"
-
 rules_json = "{\"rules\":[{\"value\":\"" + rule_value + "\",\"tag\":\"" + rule_tag + "\"}]}"
+
 headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 
 uri = URI(rules_url)

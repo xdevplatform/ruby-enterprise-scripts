@@ -11,21 +11,20 @@ account_name = ENV['ACCOUNT']
 # password = 'INSERT-PASSWORD'
 # account_name = 'INSERT-ACCOUNT-NAME'
 
-stream_label = 'prod' # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
+stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
 # Your stream URL will be constructed based on the variables entered above 
 rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
-
-# You can delete by rule value or rule ID, but not by rule tag
-rule_value = "(from:starbucks OR #starbucks OR \\\"starbucks coffee\\\")"
-rule_ids = "{\"rule_ids\":[974734704992645120]}"
-
-rules_json = "{\"rules\":[{\"value\":\"" + rule_value + "\"}]}"
-
 uri = URI(rules_url)
+
+# Specify a rule ID below (you can delete by rule value or ID, but not by tag). This script deletes by ID only.
+rule_ids = "{\"rule_ids\":[974672813809221632]}"
+
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
+
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
-request = Net::HTTP::Post.new(uri.path+"?_method=delete")
+request = Net::HTTP::Post.new(uri.path+"?_method=delete", headers)
 request.body = rule_ids
 request.basic_auth(username, password)
 

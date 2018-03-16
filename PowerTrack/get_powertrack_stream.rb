@@ -1,4 +1,4 @@
-require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
+require "net/http" # Require Net::HTTP lib which is part of the Ruby standard library
 
 # --- QUICK START GUIDE ---
 # 1. Set your environment vars or provide your credentials directly as local varibales
@@ -17,7 +17,7 @@ account_name = ENV['ACCOUNT']
 # password = 'INSERT-PASSWORD'
 # account_name = 'INSERT-ACCOUNT-NAME'
 
-stream_label = 'prod' # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
+stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
 # Your stream URL will be constructed using your account_name and stream_label vars
 stream_url = "https://gnip-stream.twitter.com/stream/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
