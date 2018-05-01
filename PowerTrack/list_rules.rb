@@ -31,5 +31,4 @@ rescue
     response = http.request(request) #try again
 end
 
-#Print out response.
 puts response.body

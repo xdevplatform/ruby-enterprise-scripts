@@ -1,4 +1,4 @@
-require "net/http" # Require Net::HTTP lib which is part of the Ruby standard library
+require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
 
 # ENVIRONMENT VARIABLES - to set your env vars on Mac OS X, run the export command below:
 # $ export UN='INSERT-USERNAME' PW='INSERT-PASSWORD' ACCOUNT='INSERT-ACCOUNT-NAME'
@@ -11,21 +11,14 @@ account_name = ENV['ACCOUNT']
 # password = 'INSERT-PASSWORD'
 # account_name = 'INSERT-ACCOUNT-NAME'
 
-stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
-
-# Your stream URL will be constructed based on the variables entered above 
-rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
-uri = URI(rules_url)
-
-# Specify a rule ID below (you can delete by rule value or ID, but not by tag). This script deletes by ID only.
-rule_ids = "{\"rule_ids\":[INSERT-RULE-ID]}" # example rule id: 991087295297044482
+# Constructs your Job endpoint URI using your account_name variable assigned above
+uri = URI("https://gnip-api.gnip.com/historical/powertrack/accounts/#{account_name}/publishers/twitter/jobs.json")
 
 headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
-request = Net::HTTP::Post.new(uri.path+"?_method=delete", headers)
-request.body = rule_ids
+request = Net::HTTP::Get.new(uri, headers)
 request.basic_auth(username, password)
 
 begin

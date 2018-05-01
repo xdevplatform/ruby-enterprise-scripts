@@ -1,4 +1,4 @@
-require "net/http" # Require Net::HTTP lib which is part of the Ruby standard library
+require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
 
 # ENVIRONMENT VARIABLES - to set your env vars on Mac OS X, run the export command below:
 # $ export UN='INSERT-USERNAME' PW='INSERT-PASSWORD' ACCOUNT='INSERT-ACCOUNT-NAME'
@@ -16,8 +16,9 @@ stream_label = "prod" # Use the label found at the end of your stream endpoint (
 # Your stream URL will be constructed based on the variables entered above 
 rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
 
-rule_value = "(\\\"steve brule\\\")"
-rule_tag = "brule"
+# Rule value below uses quoted phrase, lang operator, and negates Retweets.
+rule_value = "(\\\"big data\\\" lang:en) -is:retweet" # required. Full list of available operators: https://t.co/PKTkXlBFnb
+rule_tag = "big data" # optional. helpful for grouping sets of rules
 rules_json = "{\"rules\":[{\"value\":\"" + rule_value + "\",\"tag\":\"" + rule_tag + "\"}]}"
 
 headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}

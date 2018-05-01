@@ -1,10 +1,4 @@
-require "net/http" # Require Net::HTTP lib which is part of the Ruby standard library
-
-# --- QUICK START GUIDE ---
-# 1. Set your environment vars or provide your credentials directly as local varibales
-# 2. Provide your PowerTrack stream label (default set to 'prod')
-# 3. Run script from the command line (puts data to STDOUT): $ ruby get_powertrack_stream.rb
-# TIP: If you want to pipe the data to a file, run: $ ruby get_powertrack_stream.rb > ~/some-dir/<name-of-file>.txt
+require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
 
 # ENVIRONMENT VARIABLES - to set your env vars on Mac OS X, run the export command below:
 # $ export UN='INSERT-USERNAME' PW='INSERT-PASSWORD' ACCOUNT='INSERT-ACCOUNT-NAME'
