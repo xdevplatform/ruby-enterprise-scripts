@@ -17,18 +17,22 @@ uri = URI("https://gnip-api.gnip.com/historical/powertrack/accounts/#{account_na
 
 # Enter job details below:
 data_format = "original" # required.
-from_date = "201803152338" # optional (date must be in the format: YYYYMMDDHHMM)
-to_date = "201804131644" # optional (date must be in the format: YYYYMMDDHHMM)
-title = "job-01" # required. Must be unique to other jobs created by your account.
-rules =[ {"value": "from:twitterdev", "tag": "twitterdev"}, {"value": "from:twitter", "tag": "twitter" } ]
+from_date = "201803010000" # optional (date must be in the format: YYYYMMDDHHMM)
+to_date = "201804010000" # optional (date must be in the format: YYYYMMDDHHMM)
+title = "twitterdev-job" # required. Must be unique to other jobs created by your account.
+# Two rules are used below for example sake. Each job can contain up to 1,000 rules.
+rules =[ {"value": "from:twitterdev OR @twitterdev", "tag": "variation_01"}, {"value": "#twitterdev OR \"twitter dev\"", "tag": "variation_02" } ]
 
+# --- No input required below this point ---
+
+# Generates valid request hash
 request = { :publisher => "twitter", :streamType => "track_v2", :dataFormat => data_format, :fromDate => from_date, :toDate => to_date, :title => title, :rules => rules}
+# Converts request body from ruby hash to JSON
 json_request_body = request.to_json
-
-headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 request = Net::HTTP::Post.new(uri, headers)
 request.basic_auth(username, password)
 request.body = json_request_body
@@ -39,5 +43,5 @@ rescue
     sleep 5
     response = http.request(request) #try again
 end
-
+# Puts response HTTP code, message, and body for verbosity
 puts response.code, response.message, response.body

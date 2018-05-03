@@ -1,5 +1,7 @@
-require 'net/http'
+require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
 
+# ENVIRONMENT VARIABLES - to set your env vars on Mac OS X, run the export command below:
+# $ export UN='INSERT-USERNAME' PW='INSERT-PASSWORD' ACCOUNT='INSERT-ACCOUNT-NAME'
 username = ENV['UN']
 password = ENV['PW']
 account_name = ENV['ACCOUNT']
@@ -10,6 +12,8 @@ account_name = ENV['ACCOUNT']
 # account_name = 'INSERT-ACCOUNT-NAME'
 
 stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
+
+# --- No input required below this point ---
 
 # Your stream URL will be constructed using your account_name and stream_label vars
 stream_url = "https://gnip-stream.twitter.com/stream/sample10/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"

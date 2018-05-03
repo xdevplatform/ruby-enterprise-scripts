@@ -15,6 +15,8 @@ account_name = ENV['ACCOUNT']
 # Value provided at the end of the 'jobURL' in the response payload upon creating a job. 
 job_uuid = "INSERT-JOB-UUID" # example uuid: eky8nws010
 
+# --- No input required below this point ---
+
 # Constructs your Job endpoint URI using job_uuid and account_name variables assigned above
 uri = URI("https://gnip-api.gnip.com/historical/powertrack/accounts/#{account_name}/publishers/twitter/jobs/#{job_uuid}.json")
 
@@ -22,10 +24,9 @@ uri = URI("https://gnip-api.gnip.com/historical/powertrack/accounts/#{account_na
 request_body = { :status => "accept" }
 json_request_body = request_body.to_json
 
-headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
-
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 request = Net::HTTP::Put.new(uri, headers)
 request.basic_auth(username, password)
 request.body = json_request_body

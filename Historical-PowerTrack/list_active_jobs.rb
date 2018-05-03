@@ -14,10 +14,9 @@ account_name = ENV['ACCOUNT']
 # Constructs your Job endpoint URI using your account_name variable assigned above
 uri = URI("https://gnip-api.gnip.com/historical/powertrack/accounts/#{account_name}/publishers/twitter/jobs.json")
 
-headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
-
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 request = Net::HTTP::Get.new(uri, headers)
 request.basic_auth(username, password)
 

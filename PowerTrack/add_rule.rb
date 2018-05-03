@@ -13,19 +13,20 @@ account_name = ENV['ACCOUNT']
 
 stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
-# Your stream URL will be constructed based on the variables entered above 
-rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
+# Constructs your stream URI based on the variables entered above 
+uri = URI("https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json")
 
-# Rule value below uses quoted phrase, lang operator, and negates Retweets.
-rule_value = "(\\\"big data\\\" lang:en) -is:retweet" # required. Full list of available operators: https://t.co/PKTkXlBFnb
-rule_tag = "big data" # optional. helpful for grouping sets of rules
+# Define your rule value and tag below. Sample rule provided.
+rule_value = "((has:mentions OR has:media) is:verified) -is:retweet" # required. Full list of available operators: https://t.co/PKTkXlBFnb
+rule_tag = "verified-media-mentions" # optional. helpful attribute for grouping sets of rules
+
+# --- No input required below this point ---
+
 rules_json = "{\"rules\":[{\"value\":\"" + rule_value + "\",\"tag\":\"" + rule_tag + "\"}]}"
 
-headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
-
-uri = URI(rules_url)
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 request = Net::HTTP::Post.new(uri, headers)
 request.body = rules_json
 request.basic_auth(username, password)
@@ -34,7 +35,7 @@ begin
     response = http.request(request)
 rescue
     sleep 5
-    response = http.request(request) #try again
+    response = http.request(request) # try again
 end
 
 puts response.body

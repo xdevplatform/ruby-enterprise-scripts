@@ -13,9 +13,10 @@ account_name = ENV['ACCOUNT']
 
 stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
-# Your stream URL will be constructed using your account_name and stream_label vars
-stream_url = "https://gnip-stream.twitter.com/stream/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
-uri = URI(stream_url)
+# Constructs your stream URI using your account_name and stream_label vars
+uri = URI("https://gnip-stream.twitter.com/stream/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json")
+
+# --- No input required below this point ---
 
 # A ruby hash specifying the proper headers for the GET request to the stream endpoint
 # NOTE: The Net::HTTP lib automatically adds Accept-Encoding for compression of response bodies and automatically decompresses gzip and deflate responses.

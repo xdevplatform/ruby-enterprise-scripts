@@ -13,14 +13,12 @@ account_name = ENV['ACCOUNT']
 
 stream_label = "prod" # Use the label found at the end of your stream endpoint (e.g., prod, dev, etc.)
 
-# Your stream URL will be constructed based on the variables entered above 
-rules_url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json"
-uri = URI(rules_url)
-
-headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
+# Constructs your stream URI using your account_name and stream_label vars
+uri = URI("https://gnip-api.twitter.com/rules/powertrack/accounts/#{account_name}/publishers/twitter/#{stream_label}.json")
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+headers = {'Accept' => '*/*', 'Content-Type' => 'application/json; charset=utf-8'}
 request = Net::HTTP::Get.new(uri, headers)
 request.basic_auth(username, password)
 
