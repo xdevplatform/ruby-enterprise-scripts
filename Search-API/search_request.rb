@@ -20,10 +20,12 @@ archive = "fullarchive" # May be '30day' or 'fullarchive'
 uri = URI("https://gnip-api.twitter.com/search/#{archive}/accounts/#{account_name}/#{endpoint_label}.json")
 
 # Enter your Search parameters below:
-rule = "(#marcos) -is:retweet" # required
-from_date = "201803152338" # optional (date must be in the format: YYYYMMDDHHMM)
-to_date = "201804131644" # optional (date must be in the format: YYYYMMDDHHMM)
-max_results = 200 # optional. Accepts an integrer (10-500). Defaults is 100.
+rule = "from:twitterdev OR @twitterdev" # required
+from_date = "201803010000" # optional (date must be in the format: YYYYMMDDHHMM)
+to_date = "201803312359" # optional (date must be in the format: YYYYMMDDHHMM)
+max_results = 500 # optional. Accepts an integrer (10-500). Defaults is 100.
+
+# --- No input required below this point ---
 
 query = { :query => rule, :fromDate => from_date, :toDate => to_date, :maxResults => max_results }
 json_request_body = query.to_json
@@ -39,16 +41,19 @@ request.body = json_request_body
 # make the first request
 puts "Making Search request... #{json_request_body}"
 first_response = http.request(request)
+# JSON parse the first response body
 first_response = JSON.parse(first_response.body)
-puts first_response, "\n"
+puts first_response.to_json, "\n"
+
+total_count = first_response['results'].length
 
 # Check to see if 'next' token is returned in first response
 if first_response['next'].nil?
-	puts "No pagination required. Request complete."
+	puts "No pagination required. Request complete.", "Total count: #{total_count}"
 else
 	# Make another request with next token (begin loop)
 	next_token = first_response['next']
-	request_counter = 1
+	request_count = 1
 	while !next_token.nil? do
 		# Add 'next' param to query hash
 		query[:next] = next_token
@@ -57,11 +62,13 @@ else
 		request.body = json_request_body
 		# Make request
 		response = http.request(request)
-		temp = JSON.parse(response.body)
-		puts temp['results'].length
-		next_token = temp['next']
-		request_counter += 1
+		n_response = JSON.parse(response.body)
+		puts n_response, "\n"
+		next_token = n_response['next']
+		# iterate request_count and total_count
+		request_count += 1
+		total_count += n_response['results'].length
 	end
-	puts "\nDone paginating. Request complete."
-	puts "#{request_count} were requests made."
+	puts "Done paginating. Request complete."
+	puts "Total count: #{total_count}", "Total requests: #{request_count}"
 end

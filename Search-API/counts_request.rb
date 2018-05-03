@@ -20,10 +20,12 @@ archive = "fullarchive" # May be '30day' or 'fullarchive'
 uri = URI("https://gnip-api.twitter.com/search/#{archive}/accounts/#{account_name}/#{endpoint_label}/counts.json")
 
 # Enter your Search parameters below:
-rule = "(#marcos) -is:retweet" # required
-from_date = "201803152338" # optional (date must be in the format: YYYYMMDDHHMM)
-to_date = "201804131644" # optional (date must be in the format: YYYYMMDDHHMM)
+rule = "from:twitterdev OR @twitterdev" # required
+from_date = "201803010000" # optional (date must be in the format: YYYYMMDDHHMM)
+to_date = "201803312359" # optional (date must be in the format: YYYYMMDDHHMM)
 bucket = "day" # optional. Options of 'day', 'hour', or 'minute'. Defaults to 'hour' if no value is provided.
+
+# --- No input required below this point ---
 
 query = { :query => rule, :fromDate => from_date, :toDate => to_date, :bucket => bucket }
 json_request_body = query.to_json
@@ -38,14 +40,17 @@ request.basic_auth(username, password)
 request.body = json_request_body
 
 # Make the first request
-puts "Making counts request... #{json_request_body}"
+puts "Making counts request... #{json_request_body}", "\n"
 first_response = http.request(request)
 first_response = JSON.parse(first_response.body)
 puts first_response, "\n"
 
+# Grab 'totalCount' value from first response and use below to keep track of total_count across all requests.
+total_count = first_response['totalCount']
+
 # Check to see if 'next' token is returned in first response
 if first_response['next'].nil?
-	puts "No pagination required. Request complete."
+	puts "No pagination required. Request complete.", "Total count: #{total_count}"
 else
 	# Make another request with next token (begin loop)
 	next_token = first_response['next']
@@ -60,11 +65,11 @@ else
 		response = http.request(request)
 		# JSON parse and assign
 		n_response = JSON.parse(response.body)
-		puts n_response
+		puts n_response, "\n"
 		next_token = n_response['next']
-		puts "\n"
 		request_count += 1
+		total_count += n_response['totalCount']
 	end
-	puts "\nDone paginating. Request complete."
-	puts "#{request_count} were requests made."
+	puts "Done paginating. Request complete."
+	puts "Total count: #{total_count}", "Total requests: #{request_count}"
 end
