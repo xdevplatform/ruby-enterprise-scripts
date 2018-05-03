@@ -65,7 +65,7 @@ The only method supported with the Decahose API is a GET request to connect to t
 $ ruby get_decahose.rb
 ```
 
-## Historical PowerTrack (HPT)
+## Historical PowerTrack
 This is a job-based API that provides filtered access to the entire archive of publicly available Tweets.
 ### Create a job
 This will create a new Historical PowerTrack job.
