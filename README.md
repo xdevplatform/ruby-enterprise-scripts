@@ -1,5 +1,5 @@
 # ruby-enterprise-scripts
-Sample Ruby scripts for making request to the Twitter Enterprise APIs. These are intended to be simple and easy-to-use scripts for anyone familiar with Ruby and may be helpful building blocks for buidling your own custom code to integrate with the APIs.
+Sample Ruby scripts for making request to the Twitter Enterprise APIs. These are intended to be simple and easy-to-use scripts for anyone familiar with Ruby and may be helpful building blocks for building your own custom code to integrate with the APIs.
 
 ## Supported APIs
 This list of APIs are currently supported by this collection of scripts:
