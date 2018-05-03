@@ -4,13 +4,13 @@ Sample Ruby scripts for making request to the Twitter Enterprise APIs. These are
 ## Supported APIs
 This list of APIs are currently supported by this collection of scripts:
 1. [PowerTrack](#powertrack) - Filter realtime Tweets
-    * [Visit documentation](https://developer.twitter.com/en/docs/tweets/filter-realtime/overview/powertrack-api)
+    * [See documentation](https://developer.twitter.com/en/docs/tweets/filter-realtime/overview/powertrack-api)
 2. [Decahose](#decahose) - Sample realtime Tweets
-    * [Visit documentation](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/decahose)
+    * [See documentation](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/decahose)
 3. [Historical PowerTrack](#historical-powertrack) - Get batch historical Tweets
-    * [Visit documentation](https://developer.twitter.com/en/docs/tweets/batch-historical/overview)
+    * [See documentation](https://developer.twitter.com/en/docs/tweets/batch-historical/overview)
 4. [Search API](#search-api) - 30-Day and Full-Archve products to Search for Tweets
-    * [Visit documentation](https://developer.twitter.com/en/docs/tweets/search/overview/enterprise)
+    * [See documentation](https://developer.twitter.com/en/docs/tweets/search/overview/enterprise)
 
 ## Authorization and Authentication
 These scripts are part of our paid, Enterprise tier of API offerings. In order to make use of the scripts, you must have authorization to access the Enterprise APIs as part of a "trial" or ongoing contractual basis. If you have access to the [Gnip Console](console.gnip.com) and one or more of the APIs listed above, then you have the correct level of access.
@@ -28,18 +28,20 @@ There's also the notion of a `stream_label` or `endpoint_label` depending on the
 ```
 stream_label = "prod"
 ```
+NOTE: The API-specific instructions below assume that you've set you account-level details as environment variables *or* will set them directly in each script.
+
 ## PowerTrack
 This streaming API enables you to filter the full Twitter firehose in realtime.
 ### Add a rule
-Before you connect to the stream, you should add one more rules. Here's how:
-1. Set your account-level details (via environment or direct variables) and assign your `stream_label` value (defaults to `prod`) in the `add_rule.rb` file.
+Add a rule to your stream so that it will return matched Tweets when you connect to the stream:
+1. Assign your `stream_label` value (defaults to `prod`) in the `add_rule.rb` file.
 2. Add your rule to the `rule_value` variable in the script.
 3. Run:
 ```
 $ ruby add_rule.rb
 ```
 ### List rules
-To ensure you have rules on your stream, make a get request to list all rules on your stream: Run:
+Make a get request to list all rules on your stream: Run:
 ```
 $ ruby list_rules.rb
 ```
@@ -49,7 +51,7 @@ Make a get request to the stream endpoint to begin streaming Tweets. Run:
 $ ruby get_stream.rb
 ```
 ### Delete rules
-Here's how to delete a rule from your stream:
+Deletes a rule from your stream.
 1. Find the rule ID of the rule you want to delete (included in response from list_rules.rb)
 2. Add the rule ID to the array of rule_ids in the script
 3. Run:
@@ -63,19 +65,60 @@ The only method supported with the Decahose API is a GET request to connect to t
 $ ruby get_decahose.rb
 ```
 
-## Historical PowerTrack
+## Historical PowerTrack (HPT)
 This is a job-based API that provides filtered access to the entire archive of publicly available Tweets.
 ### Create a job
+This will create a new Historical PowerTrack job.
+1. Enter your HPT job parameters (example provided in script):
+```
+data_format = "original"
+from_date = "201803010000"
+to_date = "201804010000"
+title = "twitterdev-job"
+rules =[ {"value": "from:twitterdev", "tag": "twitterdev"}]
+```
+2. Run:
+```
+$ ruby create_job.rb
+```
 ### Get job status
+After a job is created, you can use this request to monitor the current status of the specific job.
+1. Assign the `job_uuid` variable to your job UUID (e.g., eky8nws010). Your job UUID can be found in the `jobURL` field of a successful POST request when creating a job (the step above).
+2. Run:
+```
+$ ruby get_job_status.rb
+```
 ### Accept a job
+Once the estimate has completed, you can accept the job to begin the process of retrieving the data.
+1. Assign the `job_uuid` variable to your job UUID (e.g., eky8nws010)
+2. Run:
+```
+$ ruby accept_job.rb
+```
 ### Reject a job
+Once the estimate has completed, you can reject the job if you don't want to retrieve the data.
+1. Assign the `job_uuid` variable to your job UUID (e.g., eky8nws010)
+2. Run:
+```
+$ ruby reject_job.rb
+```
 ### Get results for a job
+Retrieves info about a completed HPT job, including a list of URLs which correspond to the data files generated for a completed job. These URLs will be used to download the Twitter data files.
+1. Assign the `job_uuid` variable to your job UUID (e.g., eky8nws010)
+2. Run:
+```
+$ ruby get_results.rb
+```
 ### List active jobs
+Lists details for all HPT jobs that are not expired. Run:
+```
+$ ruby list_active_jobs.rb
+```
 
 ## Search API
 The Search API is a RESTful API that supports one query (up to 2048 characters) per request and paginates through the full request to deliver all matched Tweets. There are two levels of available archive access – 30-Day or Full-Archive – and it has two endpoints: 1) Search endpoint (retrieve Tweet payloads) 2) Counts endpoint (retrieves volume associated with your query)
 ### Search request (data)
-1. Set your account-level details (via environment or direct variables) and assign your `endpoint_label` value (defaults to `prod`) in the `search_request.rb` file.
+1. Assign your `endpoint_label` value (defaults to `prod`) in the `search_request.rb` file.
 2. Set the `archive` variable to your correct product access ('30Day' or 'fullarchive')
 3. Enter your Search parameters (example provided in script):
 ```
@@ -89,7 +132,7 @@ max_results = 500
 $ ruby search_request.rb
 ```
 ### Counts request (volume)
-1. Set your account-level details (via environment or direct variables) and assign your `endpoint_label` value (defaults to `prod`) in the `counts_request.rb` file.
+1. Assign your `endpoint_label` value (defaults to `prod`) in the `counts_request.rb` file.
 2. Set the `archive` variable to your correct product access ('30Day' or 'fullarchive')
 3. Enter your Search counts parameters (example provided in script):
 ```
