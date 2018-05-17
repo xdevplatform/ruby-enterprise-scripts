@@ -1,3 +1,7 @@
+# Copyright 2018 Twitter, Inc.
+# Licensed under the MIT License
+# https://opensource.org/licenses/MIT
+
 require "net/http" # Require Net::HTTP lib which is part of the Ruby standard library
 
 # ENVIRONMENT VARIABLES - to set your env vars on Mac OS X, run the export command below:

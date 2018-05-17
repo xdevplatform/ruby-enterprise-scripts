@@ -1,21 +1,22 @@
 # ruby-enterprise-scripts
 Sample Ruby scripts for making request to the Twitter Enterprise APIs. These are intended to be simple and easy-to-use scripts for anyone familiar with Ruby and may be helpful building blocks for buidling your own custom code to integrate with the APIs.
 
+## Dependencies
+- Ruby (recommended: >= 2.0.0)
+- A Gnip/Twitter Enterprise API Account (e.g., console.gnip.com access)
+- Ability to execute Ruby scripts (e.g., command line, IDE, etc.)
+
 ## Supported APIs
-This list of APIs are currently supported by this collection of scripts:
-1. [PowerTrack](#powertrack) - Filter realtime Tweets
-    * [See documentation](https://developer.twitter.com/en/docs/tweets/filter-realtime/overview/powertrack-api)
-2. [Decahose](#decahose) - Sample realtime Tweets
-    * [See documentation](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/decahose)
-3. [Historical PowerTrack](#historical-powertrack) - Get batch historical Tweets
-    * [See documentation](https://developer.twitter.com/en/docs/tweets/batch-historical/overview)
-4. [Search API](#search-api) - 30-Day and Full-Archve products to Search for Tweets
-    * [See documentation](https://developer.twitter.com/en/docs/tweets/search/overview/enterprise)
+API products that are currently supported by this collection of scripts (click product name to jump to that section of README):
+1. [PowerTrack](#powertrack) - Filter realtime Tweets ([link to docs](https://developer.twitter.com/en/docs/tweets/filter-realtime/overview/powertrack-api))
+2. [Decahose](#decahose) - Sample realtime Tweets ([link to docs](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/decahose))
+3. [Historical PowerTrack](#historical-powertrack) - Get batch historical Tweets ([link to docs](https://developer.twitter.com/en/docs/tweets/batch-historical/overview))
+4. [Search API](#search-api) - 30-Day and Full-Archve products to Search for Tweets ([link to docs](https://developer.twitter.com/en/docs/tweets/search/overview/enterprise))
 
 ## Authorization and Authentication
-These scripts are part of our paid, Enterprise tier of API offerings. In order to make use of the scripts, you must have authorization to access the Enterprise APIs as part of a "trial" or ongoing contractual basis. If you have access to the [Gnip Console](console.gnip.com) and one or more of the APIs listed above, then you have the correct level of access.
+These scripts are part of our paid, Enterprise tier of API offerings (Gnip). In order to make use of the scripts, you must have authorization to access the Enterprise APIs as part of a "trial" or ongoing contractual basis. If you have access to the [Gnip Console](console.gnip.com) and one or more of the APIs listed above, then you have the correct level of access. Otherwise, you can [apply for access here](https://developer.twitter.com/en/enterprise-application).
 
-Use `basic authentication` to make requests to the APIs encompassed by this script repository. Use the username and password that you currently use to login to your Gnip Console (console.gnip.com). The scripts provided suggest setting your username and password as environment variables, but allow for variable assignment of your creds and account details directly in the script itself.
+The supported APIs require `basic authentication`, using the username and password that you currently use to login to your Gnip Console (console.gnip.com). The scripts provided suggest setting your username and password as environment variables, but allow for variable assignment of your creds and account details directly in the script itself.
 
 ## Configuration
 Each script requires you to input some basic information about your account and the API endpoint. For example, the account-level details  required are (found at the top of the script):

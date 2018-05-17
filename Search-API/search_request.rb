@@ -1,3 +1,7 @@
+# Copyright 2018 Twitter, Inc.
+# Licensed under the MIT License
+# https://opensource.org/licenses/MIT
+
 require 'net/http' # Require Net::HTTP lib which is part of the Ruby standard library
 require 'json'
 
@@ -23,7 +27,7 @@ uri = URI("https://gnip-api.twitter.com/search/#{archive}/accounts/#{account_nam
 rule = "from:twitterdev OR @twitterdev" # required
 from_date = "201803010000" # optional (date must be in the format: YYYYMMDDHHMM)
 to_date = "201803312359" # optional (date must be in the format: YYYYMMDDHHMM)
-max_results = 500 # optional. Accepts an integrer (10-500). Defaults is 100.
+max_results = 500 # optional. Accepts an integer (10-500). Defaults is 100.
 
 # --- No input required below this point ---
 
